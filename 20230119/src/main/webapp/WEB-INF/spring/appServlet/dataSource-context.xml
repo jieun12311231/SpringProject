@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- resource폴더로 연결 classpath: resource폴더로 이동 // classpath*: java폴더로 이동 
+	classpath:/ 주의☆★☆★-->
+	<context:property-placeholder location="classpath:/config/db.properties" />
+	
+	<!--  밑에서 선언하는것들을 db.properties에서 사용하겠다  ▶bean에 적어야지 컨트롤러에 올라감 -->
+	
+	<!-- DBCP 클래스를 먼저 적으면 id는 만들어줌 
+		▶ setter에 의한 주입 방법   
+		name :BasicDataSource 이 가지고있는 변수
+		value : db.properties에서 가지고있는 변수  -->
+	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
+		<property name="driverClassName" value="${driver}"/>
+		<property name="url" value="${url}"/>
+		<property name="username" value="${user}"/>
+		<property name="password" value="${password}"/>
+	</bean>
+	
+	<!-- Mybatis  sqlSession: 이 이름으로 사용 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+	<!-- ▶▶DI(의존주입) ▶ setter(속성)에 의한 주입 방법  위에서 DBCP 적은 것을 주입하겠다 ref="dataSource" (참조:참조할 객체)   
+			주입할 때는 value가아니고 ref를 사용함  classpath 경로 주의★★-->
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+		<!-- mapper의 위치를 지정 
+			** : 하부 디렉토리 다~
+			*-map.xml : 형태의 매퍼를 읽겠다-->
+		<property name="mapperLocations" value="classpath*:co/micol/prj/**/map/*.xml"/>
+	</bean>
+	
+	<!-- 베이스 패키지 경로 주의★★★★-->
+	<mybatis-spring:scan base-package="co.micol.prj.**.map"/>
+	</beans>
