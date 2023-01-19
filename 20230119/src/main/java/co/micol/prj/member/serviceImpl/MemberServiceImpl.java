@@ -9,7 +9,9 @@ import co.micol.prj.member.map.MemberMapper;
 import co.micol.prj.member.service.MemberService;
 import co.micol.prj.member.vo.MemberVO;
 
-@Service
+@Service  //= @Component // @Service이거나 @Component이거중에 아무거나 써도 됨
+//@Component: 인터페이스 없이 만들면(클래스만 생성했을때 )  
+//@Service : 인터페이스가 있는 경우
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired  // 자동으로 매퍼를 끌고옴 
