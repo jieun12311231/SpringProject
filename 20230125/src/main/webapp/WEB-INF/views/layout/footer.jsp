@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-시작<p>
-<a href="noticeList.do">게시글 목록</a>
+<div align="center">
+<h1>2023 spring Project</h1>
+</div>
 </body>
 </html>
