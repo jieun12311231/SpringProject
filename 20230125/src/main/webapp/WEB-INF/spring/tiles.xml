@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="myShop" template="/WEB-INF/views/layout/layout.jsp">
+		<!-- 레이아웃 모양 -->
+		<put-attribute name="title" value="JieunShop"/>
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"/>
+	</definition>
+	
+	<definition name="*/*" extends="myShop">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- 리턴 value가 admin/* 형식으로 들어오는 것은 이쪽으로  -->
+	<definition name="admin/*" extends="myShop">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp"/>
+	</definition>
+
+	<!-- tiles를 태우고 싶지않다면  ->body와 title만 뜨게함 -->
+	<definition name="notice/*" template="/WEB-INF/views/layout/nolayout.jsp">
+		<put-attribute name="title" value="JieunShop"/>
+		<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp"/>
+	</definition>
+	
+</tiles-definitions>
