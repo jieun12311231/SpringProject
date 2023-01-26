@@ -62,7 +62,10 @@ public class MemberController {
 		}
 	
 	@PostMapping("/memberJoin.do")
-	public String memberJoin(MemberVO vo) {
+	public String memberJoin(MemberVO vo,Model model) {
+		vo.setMemberAuthor("USER");
+		model.addAttribute(memberService.memberInset(vo));
+		
 		return "redirect:/memberListSelect.do";
 		//view로 가지 않고 memberListSelect.do 얘를 다시 컨트롤러로 올림
 		//회원가입이 되면 회원목록을 보여주는 방식 

@@ -5,9 +5,9 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 
-	<title>Insert title here</title>
+<title>Insert title here</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
 									<option value="subject">내용</option>
 									<option value="writer">작성자</option>
 									<option value="date">작성일자</option>
-								</select></td>
+							</select></td>
 							<td width="250">&nbsp;<input type="text" name="val" id="val">&nbsp;
 								<input type="button" onclick="searchList()" value="검색">
 							</td>
@@ -37,10 +37,15 @@
 			</form>
 		</div>
 		<br>
-
+		<div>
+			<c:if test="${not empty id }">
+				<button type="button" onclick="location.href='noticeInsertForm.do'">글쓰기</button>
+			</c:if>
+		</div>
+		<br>
 		<table border="1" id="list-table">
 			<thead>
-				<tr>
+				<tr align="center">
 					<td width="100">순번</td>
 					<td width="250">제목</td>
 					<td width="100">작성자</td>
@@ -51,28 +56,24 @@
 			</thead>
 			<tbody id="notice-list">
 				<c:forEach items="${notices}" var="n">
-					<tr style="cursor:pointer;" onmouseover='this.style.background="#fcecae";'
-						onmouseleave='this.style.background="#FFFFFF"' onclick="noticeSel(${n.noticeId})">
+					<tr style="cursor: pointer;"
+						onmouseover='this.style.background="#fcecae";'
+						onmouseleave='this.style.background="#FFFFFF"'
+						onclick="noticeSel(${n.noticeId})">
 						<td align="center">${n.noticeId}</td>
 						<td align="center">${n.noticeTitle}</td>
 						<td align="center">${n.noticeWriter}</td>
 						<td align="center">${n.noticeDate}</td>
 						<td align="center">${n.noticeHit}</td>
-						<td align="center">
-							<c:if test="${not empty n.noticeFile}">
+						<td align="center"><c:if test="${not empty n.noticeFile}">
 								${n.noticeFile }
-							</c:if>
-						</td>
+							</c:if></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<br>
-		<div>
-<%-- 		<c:if test="${not empty id }"> --%>
-<%-- 		</c:if> --%>
-			<button type="button" onclick="location.href='noticeInsertForm.do'">글쓰기</button>
-		</div>
+
 		<div>
 			<form id="hiddenFrm" action="noticeSelect.do" method="post">
 				<input type="hidden" name="noticeId" id="noticeId">
@@ -107,23 +108,24 @@
 
 		}
 
-		function htmlConvert(data) {
+		function htmlConvert(datas) {  //json을 html로 변환해서 화면에 뿌림
 			//여기서 화면에 처리하는 과정을 작성 하면 됨 
-			document.querySelector('#notice-list').remove();
-			const container = document.createElement('tbody');
-			container.id = 'notice-list'
-			container.innerHTML = datas.map(data => createHTMLString(data)).json("");
-			document.querySelector('#list-table').append(container);
+			document.querySelector('#notice-list').remove();  //리스트의 tbody삭제
+			const container = document.createElement('tbody'); //<tbody>태그 생성
+			container.id = 'notice-list' //tbody에 id부여
+			container.innerHTML = datas.map(data => createHTMLString(data)).join("");
+			document.querySelector('#list-table').appendChild(container);  //원하는 위치에 append시키기
 		}
 
-		function createHTMLString(data) {
-			if (data.noticeFile == null)
-				data.noticeFile = ""
+		function createHTMLString(data) {  //html변환코드 css,event listner를 활용
+			if (data.noticeFile == null)  //첨부파일 존재유무 확인
+				data.noticeFile = "" //존재하지않으면 공백
 			else
-				data.noticeFile = "@"
+				data.noticeFile = "@"  //존재하면 @
+
 			let str = "<tr onmouseover=this.style.background='#fcecae';"
 			str += " onmouseleave=this.style.background='#FFFFFF';"
-			str += " onclick='";
+			str += " onclick=";
 			str += "noticeSel('" + data.noticeId + "')" + ">";
 			str += "<td align=center>" + data.noticeId + "</td>";
 			str += "<td>" + data.noticeTitle + "</td>";
@@ -131,8 +133,7 @@
 			str += "<td align=center>" + data.noticeDate + "</td>";
 			str += "<td align=center>" + data.noticeHit + "</td>";
 			str += "<td align=center>" + data.noticeFile + "</td></tr>";
-			return str
-
+			return str;
 		}
 
 		function noticeSel(n) {
