@@ -16,13 +16,13 @@ import co.micol.prj.notice.service.NoticeService;
 //-> @ResponseBody가 포함 된것이기때문에 안적어줘도됨
 
 //★ Ajax호출 전용 => RestController
-//호출한 페이지에서 돌려주고싶을때 사용하는것 
 public class NoticeRestController {
 	@Autowired
 	NoticeService noticeService;
 
+	//호출한 페이지에서 돌려주고싶을때 사용하는것 (호출한 페이지로 리턴)=> ajax많이 사용 
+	//최근에 많이 사용하는 추세
 	@RequestMapping(value = "/AjaxSearchList.do", produces = "application/json;charset=UTF-8")
-
 	public String ajaxSearchList( // 여기 써도 됨
 			@RequestParam("key") String key,   //vo객체에 담겨지지 않고 넘어오는 파라미터 
 			@RequestParam("val") String val, 

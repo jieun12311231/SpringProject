@@ -7,8 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-시작<p>
-<img src="resources/upload/aec8baf6-336b-4c0d-923d-c5a21aadb991gang.jpg">
-<a href="noticeList.do">게시글 목록</a>
+<div align="center">
+<div><h3>회원가입</h3></div>
+<div>
+<form id="frm" action="memberJoin.do" method="post">
+
+<input type="submit" value="회원가입">
+
+</form>
+</div>
+</div>
 </body>
 </html>
