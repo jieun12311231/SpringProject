@@ -12,4 +12,6 @@ public interface NoticeService {
 	int noticeDelete(NoticeVO vo);  //삭제
 	
 	List<NoticeVO> noticeSearch(String key,String val);  //검색
+	
+	int noticeHitUpdate(int id);  // 조회수 증가
 }

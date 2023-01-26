@@ -22,4 +22,6 @@ public interface NoticeMapper {
 	//key가 날아오면 key로 사용을 하겠다 
 	//val이 날아오면 value로 사용을 하겠다
 	//두개이상의 매개변수가잇으면 반드시 @Param을 사용해야함
+	
+	int noticeHitUpdate(int id);  //조회수 증가용 
 }

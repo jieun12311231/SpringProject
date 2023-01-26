@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.prj.member.map.MemberMapper">
+
+	<select id="memberListSelect" resultType="co.micol.prj.member.vo.MemberVO">
+		SELECT * FROM MEMBER ORDER BY MEMBER_ID DESC
+	</select>
+	<!-- 하나의 id가 들어오면 회원 정보를 보여줌 / id,password들어오면 로그인  -->
+	<select id="memberSelect" resultType="co.micol.prj.member.vo.MemberVO">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		<if test="memberPassword != null">
+		AND MEMBER_PASSWORD = #{memberPassword}
+	</if>
+	</select>
+	
+	<insert id="memberInset">
+	
+	</insert>
+	
+	<update id="memberUpdate">
+	
+	</update>
+	
+	<delete id="memberDelete">
+	
+	</delete>
+	
+	<select id="isIdCheck" parameterType="String" resultType="boolean">
+	
+	</select>
+
+</mapper>

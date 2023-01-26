@@ -10,13 +10,19 @@
 <body>
 	<nav id="topMenu">
 		<ul>
-			<li><a class="menuLink" href="#">Home</a></li>
-			<li><a class="menuLink" href="#">Notice</a></li>
-			<li><a class="menuLink" href="#">Join</a></li>
+			<li><a class="menuLink" href="home.do">Home</a></li>
+			<li><a class="menuLink" href="noticeList.do">Notice</a></li>
+			<li><a class="menuLink" href="memberJoinForm.do">Join</a></li>
 			<li><a class="menuLink" href="#">Content</a></li>
-			<li><a class="menuLink" href="#">Member</a></li>
-			<li><a class="menuLink" href="#">Login</a></li>
-			<li><a class="menuLink" href="#">Logout</a></li>
+			<c:if test="${author eq 'ADMIN' }">
+			<li><a class="menuLink" href="memberListSelect.do">Member</a></li>
+			</c:if>
+			<c:if test="${empty id }">
+				<li><a class="menuLink" href="memberLoginForm.do">Login</a></li>
+			</c:if>
+			<c:if test="${not empty id }">
+				<li><a class="menuLink" href="memberLogout.do">Logout</a></li>
+			</c:if>
 		</ul>
 	</nav>
 </body>
