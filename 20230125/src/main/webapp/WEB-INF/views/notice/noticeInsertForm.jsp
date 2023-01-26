@@ -46,6 +46,9 @@
 					<input type="submit" value="등록">&nbsp;&nbsp; 
 					<input type="reset" value="취소">
 				</div>
+<!-- 				<div> -->
+<%-- 					<input type="hidden" name="noticeId" value="${notice.noticeId }"> --%>
+<!-- 				</div> -->
 			</form>
 		</div>
 	</div>

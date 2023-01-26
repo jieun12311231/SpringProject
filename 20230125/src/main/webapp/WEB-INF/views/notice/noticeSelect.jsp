@@ -29,7 +29,7 @@
 				<tr>
 					<th>내용</th>
 					<td colspan="3">${notice.noticeSubject }
-					<img src="resources/upload/${notice.noticeFileDir}">
+					<img src="${notice.noticeFile}">
 					</td>
 				</tr>
 				<tr>
