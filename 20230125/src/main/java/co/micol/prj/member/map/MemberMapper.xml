@@ -14,8 +14,9 @@
 	</if>
 	</select>
 	
-	<insert id="memberInset">
-	
+	<insert id="memberInset" parameterType="co.micol.prj.member.vo.MemberVO">
+	INSERT INTO MEMBER
+	VALUES(#{memberId},#{memberName},#{memberPassword},#{memberAge},#{memberAddress},#{memberTel},#{memberAuthor})
 	</insert>
 	
 	<update id="memberUpdate">
@@ -27,7 +28,9 @@
 	</delete>
 	
 	<select id="isIdCheck" parameterType="String" resultType="boolean">
-	
+	SELECT CASE WHEN COUNT(MEMBER_ID) = 1 THEN 0 ELSE 1 END AS ID
+	FROM MEMBER
+	WHERE MEMBER_ID = #{id}
 	</select>
 
 </mapper>
