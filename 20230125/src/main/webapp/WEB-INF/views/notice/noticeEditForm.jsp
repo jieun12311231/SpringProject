@@ -18,6 +18,7 @@
 					<table border="1">
 						<tr>
 							<th width="150">작성자</th>
+							<!-- input박스 없으면 값이 넘어가지 않음! -->
 							<td width="200"><input type="text" id="noticeWriter"
 								name="noticeWriter" value="${name }" readonly="readonly"></td>
 							<th width="150">작성일자</th>
@@ -36,7 +37,7 @@
 						</tr>
 						<tr>
 							<th>첨부파일</th>
-							<td colspan="3">${notice.noticeFile }<input type="file" id="file"
+							<td colspan="3">${notice.noticeFile }&nbsp;&nbsp;<input type="file" id="file"
 								name="file"></td>
 						</tr>
 					</table>
@@ -49,7 +50,8 @@
 				<br>
 				<div>
 					<input type="submit" value="수정">&nbsp;&nbsp; 
-					<input type="reset" value="취소">
+<!-- 					<input type="reset" value="취소"> -->
+					<input type="button" value="취소" onclick="location.href='noticeList.do'">
 				</div>
 			</form>
 		</div>

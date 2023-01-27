@@ -18,9 +18,7 @@ public class MemberController {
 
 	@RequestMapping("/memberListSelect.do")
 	public String memberListSelect(Model model) {
-
 		model.addAttribute("list", memberService.memberListSelect());
-
 		return ("member/memberListSelect");
 	}
 
@@ -38,7 +36,6 @@ public class MemberController {
 		} else {
 			model.addAttribute("message", "아이디 또는 비밀번호가 틀립니다");
 		}
-
 		return "member/memberMessage"; // 로그인 성공했을때 보여주고자 하는 페이지
 	}
 
@@ -52,7 +49,6 @@ public class MemberController {
 		//model은 자동으로 형변환이 일어남.
 		model.addAttribute("message", session.getAttribute("name")+"님 정상적으로 로그아웃되었습니다.");
 		session.invalidate();
-
 		return "member/memberMessage";
 	}
 	
@@ -65,10 +61,16 @@ public class MemberController {
 	public String memberJoin(MemberVO vo,Model model) {
 		vo.setMemberAuthor("USER");
 		model.addAttribute(memberService.memberInset(vo));
-		
 		return "redirect:/memberListSelect.do";
 		//view로 가지 않고 memberListSelect.do 얘를 다시 컨트롤러로 올림
 		//회원가입이 되면 회원목록을 보여주는 방식 
 		//다시 위로 던져서 보여줌 view로가는것이 아닌것을 알려주는방식 redirect:/ 
+	}
+	
+	@PostMapping("/memberSelect.do")
+	public String memberSelect(MemberVO vo, Model model) {
+		model.addAttribute("member",memberService.memberSelect(vo));
+		System.out.println("memberSelect=> "+model);
+		return "member/memberSelect";
 	}
 }
