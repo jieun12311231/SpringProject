@@ -15,6 +15,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<NoticeVO> noticeList() {
+//		System.out.println("▶공지사항 리스트 실행중");
 		return noticeMapper.noticeList();
 	}
 

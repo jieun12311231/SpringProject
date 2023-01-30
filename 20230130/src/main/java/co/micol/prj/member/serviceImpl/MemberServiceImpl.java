@@ -24,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO memberSelect(MemberVO vo) {
+		System.out.println("▶멤버상세보기");
 		return memberMapper.memberSelect(vo);
 	}
 

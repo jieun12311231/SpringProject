@@ -21,7 +21,12 @@
 	</insert>
 	
 	<update id="memberUpdate">
-	
+	UPDATE MEMBER
+	SET MEMBER_PASSWORD = #{memberPassword},
+		MEMBER_ADDRESS =#{memberAddress},
+		MEMBER_TEL = #{memberTel},
+		MEMBER_AUTHOR =#{memberAuthor}
+		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
 	<delete id="memberDelete">

@@ -17,10 +17,15 @@ public class MemberRestController {
 		//-> db에 존재하면 false 존재하지 않으면 true
 		
 		boolean b = memberService.isIdCheck(id);  //결과값이 1또는 0 -> mybatis에서 1이면 true 0이면 false
-		String result = "true";  //db에 존재하지않음 -> 사용가능(회원가입가능)
-		if(!b) {
-			result = "false";  // db에 존재함 -> 사용 불가능(회원가입x)
-		}
-		return result;
+
+//		String result = "true";  //db에 존재하지않음 -> 사용가능(회원가입가능)
+//		if(!b) {
+//			result = "false";  // db에 존재함 -> 사용 불가능(회원가입x)
+//		}
+		
+		String str = (b == true) ? "true" : "false";
+
+		System.out.println(str);
+		return str;
 	}
 }
