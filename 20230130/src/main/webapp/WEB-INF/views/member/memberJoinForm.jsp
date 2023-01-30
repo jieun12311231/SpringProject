@@ -82,13 +82,13 @@
 		//get방식으로 실어보냄
 			let url = 'AjaxMemberIdCheck.do?id='+id;
 			fetch(url)
-				.then((response)=>response.text())
-				.then((data)=>idCheck(data));
+				.then(response =>response.text())
+				.then(data =>idCheck(data));
 		}
 		
 		function idCheck(str) {
 			console.log(str);
-			if(str == '1'){
+			if(str == 'true'){
 				alert("사용할 수 있는 아이디입니다.");
 				document.getElementById("btnId").value = 'Yes';
 				document.getElementById("btnId").disabled = true; //중복확인체크를 하면 버튼 비활성화

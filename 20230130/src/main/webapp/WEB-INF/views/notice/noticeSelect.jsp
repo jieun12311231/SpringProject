@@ -32,7 +32,7 @@
 					<th>내용</th>
 					<td colspan="3">${notice.noticeSubject }
 					</td>
-					<td colspan="2" width="50px" height="50px"><img src="resources/upload/${file}"></td>
+					<td colspan="2" width="50px" height="50px"><img src="resources/upload/${file}" alt="저장된 파일이 없습니다."></td>
 				</tr>
 				<tr>
 					<th>첨부파일</th>

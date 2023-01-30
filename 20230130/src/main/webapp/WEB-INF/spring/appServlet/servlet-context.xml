@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -9,33 +10,59 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2"/>
+		<beans:property name="order" value="2" />
 	</beans:bean>
 
 	<!-- tiles -->
-	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-		<beans:property name="order" value="1"/>
+	<beans:bean
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<beans:property name="order" value="1" />
 	</beans:bean>
-	
-	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" id="tilesConfigurer">
-	<beans:property name="definitions" value="/WEB-INF/spring/tiles.xml"/>
+
+	<beans:bean
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+		id="tilesConfigurer">
+		<beans:property name="definitions"
+			value="/WEB-INF/spring/tiles.xml" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="co.micol.prj" />
 
+	<!--▶방법1) @어노테이션으로 걸기 @(어노세이션)으로 aspect를 설정하기위해서 넣어주는것  -->
 	<aop:aspectj-autoproxy proxy-target-class="true"/>
-	<aop:config proxy-target-class="true"/>	
+
+	<!--▶방법2) xml 방법 AOP환경설정  -->
+	<!-- 어드바이스 설정 -->
+<!-- 	<beans:bean class="co.micol.prj.common.AopAspect" id="aopAspect" /> -->
+<!-- 	<aop:config> -->
+		<!-- 조인트 포인트를 어디서 찾을것인가=> 포인트컷 설정 -> 위빙전 작업 -->
+<!-- 		<aop:pointcut expression="execution(* co.micol.prj..*Impl.*(..))" id="allPoint" /> -->
+		
+		<!-- 어떻게 위빙을 할것인지 ref= 참조할 클래스 //aspect = advice + 조인트포인트 
+		어드바이스 설정-->
+<!-- 		<aop:aspect ref="aopAspect"> -->
+			<!-- 위빙 allPoint에 있는 메서드 들이 실행되기전에 beforeLog를 실행되어라 -->
+<!-- 			<aop:before method="beforeLog" pointcut-ref="allPoint" /> -->
+<!-- 			<aop:after method="afterLog" pointcut-ref="allPoint"/> -->
+<!-- 		</aop:aspect> -->
+<!-- 	</aop:config> -->
+	
 </beans:beans>
