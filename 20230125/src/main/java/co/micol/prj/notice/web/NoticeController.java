@@ -91,7 +91,7 @@ public class NoticeController {
 		if (!file.isEmpty()) { // 비어 있으면 true /비어있지않으면 false
 			// 첨부 파일이 존재하면 -> 비어있으면 true를 반환하기때문에 !를 달아서 false로 만들어서 진행함
 			String fileName = UUID.randomUUID().toString(); // 랜덤으로 파일이름을 지정함
-			fileName = fileName + "_" + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
+			fileName ="_"+ fileName + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
 			File uploadFile = new File(saveFolder, fileName);
 			try {
 				file.transferTo(uploadFile); // 실제 파일을 저장하기(물리적으로 저장)
