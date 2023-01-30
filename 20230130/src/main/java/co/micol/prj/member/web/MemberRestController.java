@@ -3,7 +3,6 @@ package co.micol.prj.member.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import co.micol.prj.member.service.MemberService;
 
 @RestController//호출한 페이지로 결과를 리턴함(API, ajax처리)
