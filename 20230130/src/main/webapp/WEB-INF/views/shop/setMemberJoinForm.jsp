@@ -85,23 +85,6 @@
 		</div>
 	</div>
 	<script>
-		// 		function formChk(){
-		// 			let idCk = document.getElementById('idCheck').value;
-		// 			if(idCk == 'no'){
-		// 				alert('아이디 중복체크를 진행하세요.')
-		// 				return false
-		// 			}
-		// 			let pass1 = document.getElementById('shPassword').value;
-		// 			let pass2 = document.getElementById('shPasswordCheck').value;
-		// 			if(pass1 != pass2){
-		// 				alert("비밀번호가 일치하지 않습니다.")
-		// 				document.getElementById('shPassword').focus();
-		// 				pass1="";
-		// 				pass2="";
-		// 				return false;
-		// 			}
-		// 			return true;
-		// 		}
 		function showDiv(n) {
 			let option = document.querySelector('input[name="shGubun"]:checked').value;
 			// alert(option)
@@ -119,7 +102,6 @@
 				document.getElementById('employee').setAttribute('style', 'display:block')
 			}
 		}
-
 		function idcheck() {
 			let id = document.getElementById("shId").value;
 			fetch("ajaxShopIdCheck.do?id=" + id)
@@ -130,7 +112,6 @@
 				})
 				.catch(err => console.log(err))
 		}
-
 		function idCheckResult(data) {
 			if (data == "true") {
 				alert("사용가능한 아이디 입니다")
@@ -142,7 +123,6 @@
 				document.getElementById("shId").focus()
 			}
 		}
-
 		function formSubmit() { //id가 shGubun인것을 찾아서 
 // 			let option = document.querySelector('input[name="shGubun"]:checked').value;
 			let option = document.querySelector('#shGubun:checked').value;
@@ -194,5 +174,4 @@
 		}
 	</script>
 </body>
-
 </html>
