@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.micol.prj.shop.map.ShopMapper">
+
+ 	<!-- CustomerList 객체로 받기  -->
+	<!--★★★★ type: 중심이 되는VO  id : 이 맵의 이름 객체로 넘어올때 담을 수 있도록 만들어 준 것 ★★★★-->
+	<!-- id: 자바에서 사용할 변수 / 테이블의 pk가 들어감 / 나머지 컬럼은 result로 들어가면됨 --> 
+	<resultMap type="co.micol.prj.shop.vo.ShopCustomerVO" id="customer">
+		<id property="shCustomerId" column="sh_customer_id"/>
+		<result property="shCustomerName" column="sh_customer_name" />
+		<result property="shCustomerTel" column="sh_customer_tel" />
+		<association property="shopMember" javaType="co.micol.prj.shop.vo.ShopMemberVO">
+			<id property="shId" column="sh_id"/>
+			<result property="shPassword" column="sh_password"/>
+			<result property="shGubun" column="sh_gubun" />
+		</association>
+	</resultMap>
+	
+	<!-- 위에서 만든 customer이라는 resultMap의 id를 resultMap에 넣어줌  -->
+	<select id="getCustomerList2" resultMap="customer">
+		SELECT *
+		FROM SHOPMEMBER S,SHOPCUSTOMER C
+		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+	</select>
+	
+	<!--CustomerList map구조로 받기 list구조의 Map으로 받기때문에 resultType은 map이 됨 => map구조로 보내겠다 
+	▶map구조로 넘기기★★
+	조인해서 map으로 사용-->
+	<select id="getCustomerList" resultType="map">
+		SELECT S.*,
+				C.SH_CUSTOMER_NAME,
+				C.SH_CUSTOMER_TEL
+		FROM SHOPMEMBER S,SHOPCUSTOMER C
+		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+	</select>
+
+	<select id="getShopList" resultType="co.micol.prj.shop.vo.ShopUserVO">
+		SELECT S.SH_PASSWORD,S.SH_GUBUN,U.*
+		FROM SHOPMEMBER S, SHOPUSER U
+		WHERE S.SH_ID = U.SH_USER_ID
+	</select>
+	
+	<select id="loginCheck" resultType="co.micol.prj.shop.vo.ShopMemberVO">
+	
+	</select>
+	
+	<select id="isIdCheck" resultType="boolean">
+	SELECT CASE WHEN COUNT(SH_ID) = 1 THEN 0 ELSE 1 END AS ID
+	FROM SHOPMEMBER
+	WHERE SH_ID = #{id}
+	</select>
+	<!-- parameterType은 굳이 안적어도됨 -->
+	<insert id="setShopUserInsert">
+	INSERT INTO SHOPUSER VALUES(#{shUserId},#{shUserName},#{shUserShopname})
+	</insert>
+	
+	<insert id="setShopCustomerInsert">
+	INSERT INTO SHOPCUSTOMER VALUES(#{shCustomerId},#{shCustomerName},#{shCustomerTel})
+	</insert>
+	
+	<insert id="setShopMemberInsert">
+	INSERT INTO SHOPMEMBER VALUES(#{shId},#{shPassword},#{shGubun})
+	</insert>
+</mapper>

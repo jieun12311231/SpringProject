@@ -6,6 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="resources/css/menu.css">
+<style type="text/css">
+@font-face {
+    font-family: 'GangwonEdu_OTFBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+font-family:'GangwonEdu_OTFBoldA';
+}
+</style>
 </head>
 <body>
 	<nav id="topMenu">
@@ -13,7 +24,7 @@
 			<li><a class="menuLink" href="home.do">Home</a></li>
 			<li><a class="menuLink" href="noticeList.do">Notice</a></li>
 
-			<li><a class="menuLink" href="#">Content</a></li>
+			<li><a class="menuLink" href="customerList.do">상점</a></li>
 			<c:if test="${author eq 'ADMIN' }">
 				<li><a class="menuLink" href="memberListSelect.do">Member</a></li>
 			</c:if>

@@ -47,7 +47,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int noticeHitUpdate(int id) {
-		
 		return noticeMapper.noticeHitUpdate(id);
 	}
 
