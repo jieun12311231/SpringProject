@@ -21,6 +21,7 @@
 		SELECT *
 		FROM SHOPMEMBER S,SHOPCUSTOMER C
 		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+		ORDER BY S.SH_ID ASC
 	</select>
 	
 	<!--CustomerList map구조로 받기 list구조의 Map으로 받기때문에 resultType은 map이 됨 => map구조로 보내겠다 
@@ -32,12 +33,14 @@
 				C.SH_CUSTOMER_TEL
 		FROM SHOPMEMBER S,SHOPCUSTOMER C
 		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+		ORDER BY S.SH_ID ASC
 	</select>
 
 	<select id="getShopList" resultType="co.micol.prj.shop.vo.ShopUserVO">
 		SELECT S.SH_PASSWORD,S.SH_GUBUN,U.*
 		FROM SHOPMEMBER S, SHOPUSER U
 		WHERE S.SH_ID = U.SH_USER_ID
+		ORDER BY S.SH_ID ASC
 	</select>
 	
 	<select id="getEmployeeList" resultType="co.micol.prj.shop.vo.ShopEmployeeVO">
@@ -45,6 +48,7 @@
 		S.*,E.SH_EMPLOYEE_NAME,E.SH_EMPLOYEE_PART,E.SH_EMPLOYEE_START_DATE,E.SH_EMPLOYEE_LAST_DATE,E.SH_EMPLOYEE_POSITION
 		FROM SHOPMEMBER S, SHOPEMPLOYEE E
 		WHERE S.SH_ID = E.SH_EMPLOYEE_ID
+		ORDER BY S.SH_ID ASC
 	</select>
 	
 	<select id="loginCheck" resultType="co.micol.prj.shop.vo.ShopMemberVO">

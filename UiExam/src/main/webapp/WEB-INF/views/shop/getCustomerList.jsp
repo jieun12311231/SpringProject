@@ -16,7 +16,7 @@
 			<td width="150" align="center">패스워드</td>
 			<td width="150" align="center">전화번호</td>
 		<tbody>
-			<c:forEach items="${customers2 }" var="c">
+			<c:forEach items="${customers }" var="c">
 				<tr style="cursor: pointer;"
 					onmouseover="this.style.background='#fcecae'"
 					onmouseleave="this.style.background='#FFFFFF'">

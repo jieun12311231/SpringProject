@@ -44,13 +44,10 @@ public class ShopController {
 
 	@PostMapping("/shopCustomerJoin.do")
 	public String shopCustomerJoin(ShopCustomerVO vo, Model model, ShopMemberVO svo) {
-		System.out.println("vo => " + vo.getShCustomerId());
-		System.out.println("svo => " + svo.getShId());
 		vo.setShCustomerId(svo.getShId()); // id를 customer table에 연결하기 위해서 아이디 값을 넣음
 		int n = shopService.setShopMemberInsert(svo); // 우선 member table에 저장
 		if (n != 0) {
 			int m = shopService.setShopCustomerInsert(vo); // 고객을 개별 table에 저장을 함
-			System.out.println("vo => " + vo.getShCustomerId());
 			if (m != 0) {
 				model.addAttribute("message", "회원가입 완");
 			} else {

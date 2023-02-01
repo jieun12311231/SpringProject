@@ -100,7 +100,7 @@
 						</table>
 					</div>
 				</div><br>
-				<input type="submit" value="등록" onclick="formSubmit()">&nbsp;
+				<input type="submit" value="등록">&nbsp;
 				<input type="reset" value="취소">
 			</form>
 		</div>

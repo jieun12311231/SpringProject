@@ -24,7 +24,11 @@ font-family:'GangwonEdu_OTFBoldA';
 			<li><a class="menuLink" href="home.do">Home</a></li>
 			<li><a class="menuLink" href="noticeList.do">Notice</a></li>
 
-			<li><a class="menuLink" href="customerList.do">상점</a></li>
+			<li><a class="menuLink" href="setMemberJoinForm.do">StoreJoin</a></li>
+			<li><a class="menuLink" href="getCustomerList2.do">Customer</a></li>
+			<li><a class="menuLink" href="shopUserList.do">User</a></li>
+			<li><a class="menuLink" href="employeeList.do">Employee</a></li>
+			
 			<c:if test="${author eq 'ADMIN' }">
 				<li><a class="menuLink" href="memberListSelect.do">Member</a></li>
 			</c:if>

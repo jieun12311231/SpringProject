@@ -35,6 +35,7 @@
 			</table>
 			<br> <a href="shopUserList.do">🍓상점 점주 리스트</a><br> 
 			<a href="getCustomerList2.do">🍓객체 형태로 고객 리스트 만들기</a><br>
+			<a href="employeeList.do">🍓직원 리스트</a><br>
 			<a href="setMemberJoinForm.do">🍓쇼핑몰 회원가입</a>
 		</div>
 	</div>
