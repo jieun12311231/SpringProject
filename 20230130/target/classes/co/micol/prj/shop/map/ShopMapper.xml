@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.micol.prj.shop.map.ShopMapper">
 
- 	<!-- CustomerList 객체로 받기  -->
+ 	<!-- CustomerList 객체로 받기 객체중심!조인이 없음! -->
 	<!--★★★★ type: 중심이 되는VO  id : 이 맵의 이름 객체로 넘어올때 담을 수 있도록 만들어 준 것 ★★★★-->
-	<!-- id: 자바에서 사용할 변수 / 테이블의 pk가 들어감 / 나머지 컬럼은 result로 들어가면됨 --> 
+	<!-- id: 자바에서 사용할 변수 / 테이블의 pk가 들어감 / 나머지 컬럼은 result로 들어가면됨 column: 리턴되는 명 --> 
 	<resultMap type="co.micol.prj.shop.vo.ShopCustomerVO" id="customer">
 		<id property="shCustomerId" column="sh_customer_id"/>
 		<result property="shCustomerName" column="sh_customer_name" />
@@ -40,6 +40,13 @@
 		WHERE S.SH_ID = U.SH_USER_ID
 	</select>
 	
+	<select id="getEmployeeList" resultType="co.micol.prj.shop.vo.ShopEmployeeVO">
+		SELECT
+		S.*,E.SH_EMPLOYEE_NAME,E.SH_EMPLOYEE_PART,E.SH_EMPLOYEE_START_DATE,E.SH_EMPLOYEE_LAST_DATE,E.SH_EMPLOYEE_POSITION
+		FROM SHOPMEMBER S, SHOPEMPLOYEE E
+		WHERE S.SH_ID = E.SH_EMPLOYEE_ID
+	</select>
+	
 	<select id="loginCheck" resultType="co.micol.prj.shop.vo.ShopMemberVO">
 	
 	</select>
@@ -60,5 +67,9 @@
 	
 	<insert id="setShopMemberInsert">
 	INSERT INTO SHOPMEMBER VALUES(#{shId},#{shPassword},#{shGubun})
+	</insert>
+	
+	<insert id="setShopEmployeeInsert">
+	INSERT INTO SHOPEMPLOYEE VALUES(#{shEmployeeName},#{shEmployeePart},#{shEmployeeStartDate},#{shEmployeeLastDate},#{shEmployeePosition},#{shEmployeeId})
 	</insert>
 </mapper>

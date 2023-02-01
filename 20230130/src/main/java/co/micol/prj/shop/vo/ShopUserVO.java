@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ShopUserVO extends ShopMemberVO{
+public class ShopUserVO extends ShopMemberVO{  //상속해놓으면 따로vo에 적어주지않아도 사용이가능함
 	private String shUserId;
 	private String shUserName;
 	private String shUserShopname;

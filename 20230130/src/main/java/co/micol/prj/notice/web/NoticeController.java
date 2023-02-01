@@ -2,13 +2,16 @@ package co.micol.prj.notice.web;
 
 import java.io.File;
 import java.util.UUID;
+
 import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+
 import co.micol.prj.notice.service.NoticeService;
 import co.micol.prj.notice.vo.NoticeVO;
 
@@ -30,25 +33,19 @@ public class NoticeController {
 
 	@PostMapping("/noticeSelect.do")
 	public String noticeSelect(NoticeVO vo, Model model) {
-		//
 		vo = noticeService.noticeSelect(vo);
+		//noticeHitUpdate(vo.getNoticeId());
 		if(vo.getNoticeFile() != null) {
 			String fileDir = vo.getNoticeFileDir();
-			
 			int fileLength = fileDir.length(); 
 			int fileCutIndex = fileDir.lastIndexOf('_');
-			
 			String fileCut = fileDir.substring(fileCutIndex, fileLength);
-			
 			model.addAttribute("file",fileCut);
-			
-			System.out.println("사진떠라"+model);
-			System.out.println(fileCut);
 		}else {
 			model.addAttribute("file","첨부파일이 없습니다.");
 		}
-		
 		model.addAttribute("notice", noticeService.noticeSelect(vo));
+		
 		return "notice/noticeSelect";
 	}
 

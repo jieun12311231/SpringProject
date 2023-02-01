@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import co.micol.prj.shop.map.ShopMapper;
 import co.micol.prj.shop.vo.ShopCustomerVO;
+import co.micol.prj.shop.vo.ShopEmployeeVO;
 import co.micol.prj.shop.vo.ShopMemberVO;
 import co.micol.prj.shop.vo.ShopUserVO;
 @Service
@@ -53,6 +54,16 @@ private ShopMapper shopMapper;
 	@Override
 	public int setShopMemberInsert(ShopMemberVO vo) {
 		return shopMapper.setShopMemberInsert(vo);
+	}
+	
+	
+	@Override
+	public List<ShopEmployeeVO> getEmployeeList() {
+		return shopMapper.getEmployeeList();
+	}
+	@Override
+	public int setShopEmployeeInsert(ShopEmployeeVO vo) {
+		return shopMapper.setShopEmployeeInsert(vo);
 	}
 
 

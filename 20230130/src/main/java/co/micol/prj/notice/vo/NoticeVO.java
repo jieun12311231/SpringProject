@@ -21,4 +21,8 @@ public class NoticeVO {
 	private int noticeHit;
 	private String noticeFile;
 	private String noticeFileDir;
+	
+	//Search
+	private String key;
+	private String val;
 }

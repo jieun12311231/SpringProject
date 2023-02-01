@@ -66,15 +66,36 @@
 							</tr>
 						</table>
 					</div>
-					<div id="employee" style="display: none;">
+						<div id="employee" style="display: none;">
 						<table>
 							<tr>
-								<th>직원 이름</th>
-								<td><input type="text" id="" name="" ></td>
+								<th>이름</th>
+								<td><input type="text" id="shEmployeeName" name="shEmployeeName">
+								</td>
 							</tr>
 							<tr>
-								<th>직원 연락처</th>
-								<td><input type="tel" id="" name="" ></td>
+								<th>부서</th>
+								<td><select id="shEmployeePart" name="shEmployeePart">
+										<option value="" disabled>::선택</option>
+										<option value="Management">관리부</option>
+										<option value="Marketing">마케팅부</option>
+									</select></td>
+							</tr>
+							<tr>
+								<th>입사일자</th>
+								<td><input type="date" id="shEmployeeStartDate" name="shEmployeeStartDate"></td>
+							</tr>
+							<tr>
+								<th>퇴사일자</th>
+								<td><input type="date" id="shEmployeeLastDate" name="shEmployeeLastDate"></td>
+							</tr>
+							<tr>
+								<th>직급</th>
+								<td><select id="shEmployeePosition" name="shEmployeePosition">
+										<option value="" disabled>::선택</option>
+										<option value="Team Leader">팀장</option>
+										<option value="Employee">사원</option>
+									</select></td>
 							</tr>
 						</table>
 					</div>
@@ -85,6 +106,21 @@
 		</div>
 	</div>
 	<script>
+	//부서 select 
+	let part = document.querySelector('#shEmployeePart')
+	part.addEventListener('change',(event)=>{
+		if (event.target.value !== "type") {
+		part.value = event.target.value;
+		}
+	})
+
+//직급 select
+	let position = document.querySelector('#shEmployeePosition')
+	position.addEventListener('change',(event)=>{
+		if (event.target.value !== "type") {
+			position.value = event.target.value;
+		}
+	})
 		function showDiv(n) {
 			let option = document.querySelector('input[name="shGubun"]:checked').value;
 			// alert(option)
@@ -137,40 +173,40 @@
 			if (option == 'C') { //고객
 				if(frm.shCustomerName.value ==""){
 					alert("사용자 이름을 입력하세요")
-					frm.shCustomerName.focus();
 					return false
 				}else if(frm.shCustomerTel.value ==""){
 					alert("사용자 전화번호를 입력하세요")
-					frm.shCustomerTel.focus();
 					return false
 				}
 				frm.action = "shopCustomerJoin.do"
 			} else if (option == 'U') {
 				if(frm.shUserName.value ==""){
 					alert("대표 이름을 입력하세요")
-					frm.shUserName.focus();
 					return false
 				}else if(frm.shUserShopname.value ==""){
 					alert("상호명을 입력하세요")
-					frm.shUserShopname.focus();
 					return false
 				}
 				frm.action = "shopUserJoin.do"
-			} else { //employee정보 넣기 
+			} else {
 				//폼 체크 구문 작성
-				// if(frm.shUserName.value =""){
-				// 	alert("대표 이름을 입력하세요")
-				// 	frm.shUserName.focus();
-				// 	return false
-				// }else if(frm.shUserShopname.value =""){
-				// 	alert("상호명을 입력하세요")
-				// 	frm.shUserShopname.focus();
-				// 	return false
-				// }
-				frm.action = "shopEmployeeJoin.do"
+				if (frm.shEmployeeName.value == "") {
+					alert("직원 이름을 입력하세요");
+					return false;
+				} else if (frm.shEmployeePart.value == "") {
+					alert("부서를 입력하세요");
+					return false;
+				} else if (frm.shEmployeeStartDate.value == "") {
+					alert("입사일자를 입력하세요");
+					return false;
+				} else if (frm.shEmployeePosition.value == "") {
+					alert("직급을 입력하세요");
+					return false;
+				}
+				frm.action = "shopEmployeeJoin.do";
 			}
  			return true
-		 //frm.submit();
+		
 		}
 	</script>
 </body>

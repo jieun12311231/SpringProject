@@ -29,7 +29,7 @@
 									<option value="date">작성일자</option>
 							</select></td>
 							<td width="250">&nbsp;<input type="text" name="val" id="val">&nbsp;
-								<input type="button" onclick="searchList()" value="검색">
+								<input type="button" onclick="searchListJson()" value="검색">
 							</td>
 						</tr>
 					</table>
@@ -81,22 +81,44 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		function searchList() { //검색 버튼을 누르면 진행되는 함수 
-			let url = 'AjaxSearchList.do';
+	
+// 		function searchList() { //검색 버튼을 누르면 진행되는 함수 
+// 			let url = 'AjaxSearchList.do';
+// 			let key = document.getElementById('key').value;
+// 			let val = document.getElementById('val').value;
+
+// 			let payload = 'key=' + key + '&val=' + val
+// 			//json방식으로 만들
+
+// 			// fetch(url+'?key='+key+'&val='+val)  //get방식
+// 			fetch(url, { //post방식
+// 					method: 'post',
+// 					headers: {
+// 						'Content-Type': 'application/x-www-form-urlencoded'
+// 					},
+// 					body: payload
+
+// 				})
+// 				.then(response => response.json())
+// 				.then(data => {
+// 					htmlConvert(data)
+// 					console.log(data)
+// 				})
+// 			// .catch(err => console.log(err))
+// 		}
+		function searchListJson() { //검색 버튼을 누르면 진행되는 함수 
+			let url = 'AjaxSearchListJson.do';
 			let key = document.getElementById('key').value;
 			let val = document.getElementById('val').value;
 
-			let payload = 'key=' + key + '&val=' + val
+			let payload = {"key":key, "val":val};
 			//json방식으로 만들
 
 			// fetch(url+'?key='+key+'&val='+val)  //get방식
 			fetch(url, { //post방식
 					method: 'post',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					body: payload
-
+					headers: {'Content-Type': 'application/json'},  //데이터를 json형태로 넘기겠다
+					body: JSON.stringify(payload)
 				})
 				.then(response => response.json())
 				.then(data => {
@@ -104,8 +126,6 @@
 					console.log(data)
 				})
 			// .catch(err => console.log(err))
-
-
 		}
 
 		function htmlConvert(datas) {  //json을 html로 변환해서 화면에 뿌림
@@ -113,7 +133,7 @@
 			document.querySelector('#notice-list').remove();  //리스트의 tbody삭제
 			const container = document.createElement('tbody'); //<tbody>태그 생성
 			container.id = 'notice-list' //tbody에 id부여
-			container.innerHTML = datas.map(data => createHTMLString(data)).join("");
+			container.innerHTML = datas.map(data => createHTMLString(data)).join(""); //map을 이용해서 한줄의 데이터를 받아서 꾸밀수있음 => 꾸민 데이터를 join
 			document.querySelector('#list-table').appendChild(container);  //원하는 위치에 append시키기
 		}
 
@@ -121,7 +141,7 @@
 			if (data.noticeFile == null)  //첨부파일 존재유무 확인
 				data.noticeFile = "" //존재하지않으면 공백
 			else
-				data.noticeFile = "@"  //존재하면 @
+				data.noticeFile = "💾" //존재하면 @
 
 			let str = "<tr onmouseover=this.style.background='#fcecae';"
 			str += " onmouseleave=this.style.background='#FFFFFF';"

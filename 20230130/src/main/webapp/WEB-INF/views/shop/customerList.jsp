@@ -19,7 +19,7 @@
 					<td width="150" align="center">이 름</td>
 					<td width="150" align="center">전화번호</td>
 				<tbody>
-				<!-- DB이름 그대로 넣어줘야함!! -->
+				<!-- result type이 map이면 DB이름 그대로 대문자로!!넣어줘야함!! -->
 					<c:forEach items="${customers }" var="C">
 						<tr style="cursor: pointer;"
 							onmouseover="this.style.background='#fcecae'"

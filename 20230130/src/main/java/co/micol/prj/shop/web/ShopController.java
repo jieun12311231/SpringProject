@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import co.micol.prj.shop.service.ShopService;
 import co.micol.prj.shop.vo.ShopCustomerVO;
+import co.micol.prj.shop.vo.ShopEmployeeVO;
 import co.micol.prj.shop.vo.ShopMemberVO;
 import co.micol.prj.shop.vo.ShopUserVO;
 
@@ -81,8 +82,25 @@ public class ShopController {
 	}
 
 	@PostMapping("/shopEmployeeJoin.do")
-	public String shopEmployeeJoin(Model model, ShopMemberVO svo) { // empVO넣어주고 동작 시키면 됨
-		model.addAttribute("message", "회원가입 완");
-		return "shop/shopEmployeeJoin";
+	public String shopEmployeeJoin(Model model, ShopMemberVO svo,ShopEmployeeVO vo) { // empVO넣어주고 동작 시키면 됨
+		vo.setShEmployeeId(svo.getShId());
+		int n = shopService.setShopMemberInsert(svo);
+		if(n != 0) {
+			int m = shopService.setShopEmployeeInsert(vo);
+			if(m != 0) {
+				model.addAttribute("message","직원 가입 완료");
+			}else {
+				model.addAttribute("message","직원 가입 실패");
+			}
+		}else {
+			model.addAttribute("message","직원 가입 실패");
+		}
+		return "shop/shopMessage";
 	}
+	@GetMapping("/employeeList.do")
+	public String employeeList(Model model,ShopEmployeeVO vo) {
+		model.addAttribute("employees",shopService.getEmployeeList());
+		return "shop/employeeList";
+	}
+	
 }
