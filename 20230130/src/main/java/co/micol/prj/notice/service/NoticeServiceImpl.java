@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public NoticeVO noticeSelect(NoticeVO vo) {
-//		noticeHitUpdate(vo.getNoticeId());
+		noticeHitUpdate(vo.getNoticeId());
 		return noticeMapper.noticeSelect(vo);
 	}
 

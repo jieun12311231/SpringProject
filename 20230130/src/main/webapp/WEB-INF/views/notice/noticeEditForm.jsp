@@ -12,8 +12,7 @@
 			<h1>공지사항 수정</h1>
 		</div>
 		<div align="center">
-			<form id="frm" action="noticeEdit.do" method="post"
-				enctype="multipart/form-data">
+			<form id="frm" action="noticeEdit.do" method="post" enctype="multipart/form-data">
 				<div>
 					<table border="1">
 						<tr>
@@ -50,11 +49,24 @@
 				<br>
 				<div>
 					<input type="submit" value="수정">&nbsp;&nbsp; 
-<!-- 					<input type="reset" value="취소"> -->
+					<!-- ajax로 하기 위해서 button으러 바꿔야함 -->
+<!-- 					<input type="button" value="수정" onclick="update()">&nbsp;&nbsp;  -->
 					<input type="button" value="취소" onclick="location.href='noticeList.do'">
 				</div>
 			</form>
 		</div>
 	</div>
+	<script>
+		window.onload = function(){
+			let message = "${message}";  //model에서 넘어온 변수
+			if(message != "")
+			alert(message);
+		}
+		//ajax방법
+		function update(){
+			//data set
+			//fetch(url,{})
+		}
+	</script>
 </body>
 </html>
