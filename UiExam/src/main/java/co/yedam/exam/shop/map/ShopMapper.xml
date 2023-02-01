@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yedam.exam.shop.map.ShopMapper">
+	<resultMap type="co.yedam.exam.shop.vo.ShopCustomerVO" id="customer">
+		<id property="shCustomerId" column="SH_CUSTOMER_ID"/>
+		<result property="shCustomerName" column="SH_CUSTOMER_NAME"/>
+		<result property="shCustomerTel" column="SH_CUSTOMER_TEL"/>
+		<association property="shopMember" javaType="co.yedam.exam.shop.vo.ShopMemberVO">
+			<id property="shId" column="sh_id"/>
+			<result property="shPassword" column="sh_password"/>
+			<result property="shGubun" column="sh_gubun"/>
+		</association>
+	</resultMap>
+
+	<select id="getCoustomerList" resultType="map">
+		SELECT S.*,
+			C.SH_CUSTOMER_NAME,
+			C.SH_CUSTOMER_TEL
+		FROM SHOPMEMBER S, SHOPCUSTOMER C
+		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+		ORDER BY S.SH_ID ASC
+	</select>
+	
+	<select id="getShopList" resultType="co.yedam.exam.shop.vo.ShUserVO">
+		SELECT S.SH_PASSWORD,S.SH_GUBUN, U.*
+		FROM SHOPMEMBER S, SHOPUSER U
+		WHERE S.SH_ID = U.SH_USER_ID
+		ORDER BY S.SH_ID ASC
+	</select>
+	
+	<select id="getCustomerList" resultMap="customer">
+		SELECT *
+		FROM SHOPMEMBER S, SHOPCUSTOMER C
+		WHERE S.SH_ID = C.SH_CUSTOMER_ID
+		ORDER BY S.SH_ID ASC
+	</select>
+	
+	<select id="getEmployeeList" resultType="co.yedam.exam.shop.vo.ShopEmployeeVO">
+		SELECT
+		S.*,E.SH_EMPLOYEE_NAME,E.SH_EMPLOYEE_PART,E.SH_EMPLOYEE_START_DATE,E.SH_EMPLOYEE_LAST_DATE,E.SH_EMPLOYEE_POSITION
+		FROM SHOPMEMBER S, SHOPEMPLOYEE E
+		WHERE S.SH_ID = E.SH_EMPLOYEE_ID
+		ORDER BY S.SH_ID ASC
+	</select>
+
+	<select id="loginCheck" resultType="co.yedam.exam.shop.vo.ShopMemberVO">
+	
+	</select>
+	
+	<select id="isIdCheck" resultType="boolean">
+		SELECT 
+			CASE WHEN COUNT(SH_ID) = 1 THEN 1 ELSE 0 END AS ID
+		FROM SHOPMEMBER
+		WHERE SH_ID = #{id}
+	</select>
+	
+	<insert id="setShopUser">
+		INSERT INTO SHOPUSER
+		VALUES(#{shUserId}, #{shUserName}, #{shUserShopname})
+	</insert>
+	
+	<insert id="setCoustomer">
+		INSERT INTO SHOPCUSTOMER
+		VALUES(#{shCustomerId}, #{shCustomerName}, #{shCustomerTel})
+	</insert>
+	
+	<insert id="setMember">
+		INSERT INTO SHOPMEMBER VALUES(#{shId},#{shPassword},#{shGubun})
+	</insert>
+	
+	<insert id="setShopEmployeeInsert">
+	INSERT INTO SHOPEMPLOYEE VALUES(#{shEmployeeName},#{shEmployeePart},#{shEmployeeStartDate},#{shEmployeeLastDate},#{shEmployeePosition},#{shEmployeeId})
+	</insert>
+</mapper>
