@@ -3,7 +3,7 @@
 <mapper namespace="co.micol.prj.member.map.MemberMapper">
 
 	<select id="memberListSelect" resultType="co.micol.prj.member.vo.MemberVO">
-		SELECT * FROM MEMBER ORDER BY MEMBER_ID DESC
+		SELECT * FROM MEMBER ORDER BY MEMBER_ID ASC
 	</select>
 	
 	<!-- 하나의 id가 들어오면 회원 정보를 보여줌 / id,password들어오면 로그인  -->

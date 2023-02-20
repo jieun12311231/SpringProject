@@ -19,7 +19,7 @@
 							<th width="150">아이디</th>
 							<td width="300">
 								<input type="text" id="memberId" name="memberId" required="required">
-<!-- 								<button type="button" onclick="idChk()" id="btnId" value="No">중복체크</button> -->
+								<button type="button" onclick="idChk()" id="btnId" value="No">중복체크</button>
 							</td>
 						</tr>
 						<tr>
@@ -46,7 +46,7 @@
 						</tr>
 						<tr>
 							<th width="150">전화번호</th>
-							<td><input type="tel" id="memberTell" name="memberTell">
+							<td><input type="tel" id="memberTel" name="memberTel">
 							</td>
 						</tr>
 					</table>

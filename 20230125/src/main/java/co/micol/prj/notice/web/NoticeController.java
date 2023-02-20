@@ -1,18 +1,14 @@
 package co.micol.prj.notice.web;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
-
 import javax.servlet.ServletContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-
 import co.micol.prj.notice.service.NoticeService;
 import co.micol.prj.notice.vo.NoticeVO;
 
@@ -34,6 +30,24 @@ public class NoticeController {
 
 	@PostMapping("/noticeSelect.do")
 	public String noticeSelect(NoticeVO vo, Model model) {
+		//
+		vo = noticeService.noticeSelect(vo);
+		if(vo.getNoticeFile() != null) {
+			String fileDir = vo.getNoticeFileDir();
+			
+			int fileLength = fileDir.length(); 
+			int fileCutIndex = fileDir.lastIndexOf('_');
+			
+			String fileCut = fileDir.substring(fileCutIndex, fileLength);
+			
+			model.addAttribute("file",fileCut);
+			
+			System.out.println("사진떠라"+model);
+			System.out.println(fileCut);
+		}else {
+			model.addAttribute("file","첨부파일이 없습니다.");
+		}
+		
 		model.addAttribute("notice", noticeService.noticeSelect(vo));
 		return "notice/noticeSelect";
 	}
@@ -42,78 +56,14 @@ public class NoticeController {
 	public String noticeInsertForm() {
 		return "notice/noticeInsertForm";
 	}
-	
-	
-//	@PostMapping(value = "/noticeInsert.do")
-//	   public String noticeInsert(NoticeVO vo, MultipartFile file) {
-//
-//	      // 파일 저장 위치 설정
-//	      String saveFolder = servletContext.getRealPath("/resources/upload/");
-//
-//	      // 실제로 파일 저장하는 것
-//	      // ↓ file이 비어있으면 true 반환
-//	      if (!file.isEmpty()) {
-//	         String fileName = UUID.randomUUID().toString(); // 파일 이름 중복되지 않게 하기 위해서 설정(동일한 파일을 올려도 중복되지 않게끔 설정)
-//	         fileName += "_" + file.getOriginalFilename();
-//	         // 업로드파일 설정
-//	         File uploadFile = new File(saveFolder, fileName);
-//	         try {
-//	            System.out.println("파일을 업로드합니다.");
-//	            file.transferTo(uploadFile);
-//	            vo.setNoticeFile(fileName); // 원본 파일명
-//	            vo.setNoticeFileDir(saveFolder + fileName); // 물리적 파일 저장 위치
-//	         } catch (IllegalStateException | IOException e) {
-//	            e.printStackTrace();
-//	         }
-//	      }
-//	      noticeService.noticeInsert(vo);
-//
-//	      // db 저장 루틴
-//	      // redirect : view로 가지 않고 바로 .do로 가게 하는 것
-//	      return "redirect:noticeList.do";
-//	   }
-//	
+
 	@PostMapping("/noticeInsert.do")
 	public String noticeInsert(NoticeVO vo, MultipartFile file) { // form에 있는 file이 여기 담겼다고 생각하면 됨
-//		System.out.println("noticeInsert => " + vo);
 		String saveFolder = servletContext.getRealPath("/resources/upload/"); // 파일 저장 위치
 		if (!file.isEmpty()) { // 비어 있으면 true /비어있지않으면 false
 			// 첨부 파일이 존재하면 -> 비어있으면 true를 반환하기때문에 !를 달아서 false로 만들어서 진행함
 			String fileName = UUID.randomUUID().toString(); // 랜덤으로 파일이름을 지정함
-			fileName = fileName + "_" + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
-			File uploadFile = new File(saveFolder, fileName);
-			try {
-				file.transferTo(uploadFile); // 실제 파일을 저장하기(물리적으로 저장)
-				System.out.println("사진저장됨");
-				vo.setNoticeFile(file.getOriginalFilename()); // 원본 파일 명
-				vo.setNoticeFileDir(saveFolder + fileName); // 디렉토리 포한 원본 파일 명 //원본 파일을 불러올수있음 => 물리적 위치
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println(vo);
-		} // 파일이 없으면 바로 db에 저장 되도록
-		int cnt = noticeService.noticeInsert(vo); // db저장
-		System.out.println("=============왔니");
-		System.out.println(cnt);
-		System.out.println(vo+"=============왔니");
-
-		return "redirect:/noticeList.do";
-	}
-
-	@RequestMapping("/noticeEditForm.do")
-	public String noticeEditForm(NoticeVO vo, Model model) {
-		vo = noticeService.noticeSelect(vo);
-		model.addAttribute("notice", vo);
-		return "notice/noticeEditForm";
-	}
-
-	@RequestMapping("/noticeEdit.do")
-	public String noticeEdit(NoticeVO vo, MultipartFile file) {
-		String saveFolder = servletContext.getRealPath("/resources/upload/"); // 파일 저장 위치
-		if (!file.isEmpty()) { // 비어 있으면 true /비어있지않으면 false
-			// 첨부 파일이 존재하면 -> 비어있으면 true를 반환하기때문에 !를 달아서 false로 만들어서 진행함
-			String fileName = UUID.randomUUID().toString(); // 랜덤으로 파일이름을 지정함
-			fileName = fileName + "_" + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
+			fileName ="_"+ fileName + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
 			File uploadFile = new File(saveFolder, fileName);
 			try {
 				file.transferTo(uploadFile); // 실제 파일을 저장하기(물리적으로 저장)
@@ -122,20 +72,82 @@ public class NoticeController {
 			}
 			vo.setNoticeFile(file.getOriginalFilename()); // 원본 파일 명
 			vo.setNoticeFileDir(saveFolder + fileName); // 디렉토리 포한 원본 파일 명 //원본 파일을 불러올수있음 => 물리적 위치
-
+			
 		} // 파일이 없으면 바로 db에 저장 되도록
-		noticeService.noticeUpdate(vo); // db저장
-
+		noticeService.noticeInsert(vo);
 		return "redirect:/noticeList.do";
 	}
 
+	@RequestMapping("/noticeEditForm.do")
+	public String noticeEditForm(NoticeVO vo, Model model) {
+		model.addAttribute("notice", noticeService.noticeSelect(vo));
+		return "notice/noticeEditForm";
+	}
+
+//✔내가 한 방법
+	@PostMapping("/noticeEdit.do")
+	public String noticeEdit(NoticeVO vo, MultipartFile file, Model model) {
+		String saveFolder = servletContext.getRealPath("/resources/upload/"); // 파일 저장 위치
+		if (!file.isEmpty()) { // 비어 있으면 true /비어있지않으면 false
+			// 첨부 파일이 존재하면 -> 비어있으면 true를 반환하기때문에 !를 달아서 false로 만들어서 진행함
+			String fileName = UUID.randomUUID().toString(); // 랜덤으로 파일이름을 지정함
+			fileName ="_"+ fileName + file.getOriginalFilename(); // 랜덤으로 만들어진 uuid + 원본 파일이름
+			File uploadFile = new File(saveFolder, fileName);
+			try {
+				file.transferTo(uploadFile); // 실제 파일을 저장하기(물리적으로 저장)
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			vo.setNoticeFile(file.getOriginalFilename()); // 원본 파일 명
+			vo.setNoticeFileDir(saveFolder + fileName); // 디렉토리 포한 원본 파일 명 //원본 파일을 불러올수있음 => 물리적 위치
+			
+		} // 파일이 없으면 바로 db에 저장 되도록
+		noticeService.noticeUpdate(vo); // db저장
+		return "redirect:/noticeList.do";
+	}
+
+	// ✔ModelAndView사용하는 방법 -> 최근에는 잘 사용하지않음// 무거움 
+//	@PostMapping("/noticeEdit.do")
+//	public ModelAndView noticeEdit(NoticeVO vo, ModelAndView mv) {
+//		int n = noticeService.noticeUpdate(vo);
+//		if (n != 0) {
+//			mv.addObject("notice", noticeService.noticeSelect(vo));
+//			mv.setViewName("notice/noticeSelect"); // 돌아갈 페이지
+//		} else {
+//			mv.addObject("message", "수정이 정상적으로 처리되지 못했습니다");
+//			mv.setViewName("notice/noticeError");
+//		}
+//		return mv;
+//	}
+
+	// ✔Model 사용하는 방법 -> 최근에 권장하는 방법 / model은 인터페이스라서 가벼움 
+//	@PostMapping("/noticeEdit.do")
+//	public String noticeEdit(NoticeVO vo,MultipartFile file, Model model) {
+//		String viewPage = null;
+//		int n = noticeService.noticeUpdate(vo);
+//		if (n != 0) {
+//			model.addAttribute("notice", noticeService.noticeSelect(vo));
+//			viewPage="notice/noticeSelect"; // 돌아갈 페이지
+//		} else {
+//			model.addAttribute("message", "수정이 정상적으로 처리되지 못했습니다");
+//			viewPage="notice/noticeError";
+//		}
+//		return viewPage;
+//	}
+
 	@RequestMapping("/noticeDelete.do")
 	public String noticeDelete(NoticeVO vo) {
-		System.out.println("삭제 호출되었니");
-		System.out.println("삭제 보 => " + vo);
-
+		vo = noticeService.noticeSelect(vo);  //id만 넘어오기 때문에 id값을 통해서 vo자체를 불러오게함
+		// 실제 올라가있는 첨부파일도 지울수 있도록 만들어 보기
+		if(vo.getNoticeFile() != null) {
+			System.out.println("noticeDeldte=> "+vo);
+			File file = new File(vo.getNoticeFileDir());  
+			//vo에 있는 파일 경로를 꺼내와서 file에 담음 -> 이 경로에 있는 파일을 가지고와서 file에 담음 
+			
+			file.delete(); //경로에서 찾아온 파일을 delete
+			
+		}
 		noticeService.noticeDelete(vo);
-
 		return "redirect:/noticeList.do";
 	}
 
